@@ -1,12 +1,12 @@
 //first task
-function lengthRow (row) {
-  const length = row.length;
-  if (length >= 10) {
-    return true;
+function lengthRow (string, maxLength) {
+  const length = string.length;
+  if (length > maxLength) {
+    return false;
   }
-  return false;
+  return true;
 }
-lengthRow ('Абра-кадабра');
+lengthRow ('Абра-кадабра 25', 15);
 
 //second task 1
 function getPalindrome (text) {

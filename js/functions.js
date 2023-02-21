@@ -31,9 +31,9 @@ const getNumber = (text) => {
       textNew = textNew + text[i];
     }
   }
-  return (textNew !== '') ? textNew : NaN;
+  return (textNew !== '') ? parseInt(textNew, 10) : NaN;
 };
-getNumber('d4fhgjgj456577');
+getNumber('агент 007');
 
 //fourth task
 function addString (str, count, addRow) {

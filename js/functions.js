@@ -1,56 +1,46 @@
 //first task
-function lengthRow (string, maxLength) {
-  const length = string.length;
-  if (length > maxLength) {
-    return false;
-  }
-  return true;
-}
-lengthRow ('Абра-кадабра 25', 15);
+const checklength = (string, maxLength) => (string.length <= maxLength) ? 'true' : 'false';
+checklength ('проверяемая строка', 18);
 
-//second task 1
-function getPalindrome (text) {
-  const examineText = text.replaceAll(' ','').replaceAll('.','').replaceAll(',','').toUpperCase();
-  const reverseExamineText = examineText.split('').reverse().join('');
-  if (examineText === reverseExamineText) {
-    return true;
-  }
-  return false;
-}
-getPalindrome ('Evil fit some kill like me, kill like most, if live.');
+//second task 1variant
+const isPalindrome = (string) => {
+  const stringModify = string.replaceAll(' ','').replaceAll('.','').replaceAll(',','').toLowerCase();
+  return stringModify === stringModify.split('').reverse().join('');
+};
+isPalindrome ('Evil fit some kill like me, kill like most, if live.');
 
-//second task 2
-function getPalindrome1 (examineText) {
-  let examineTextNew = '';
-  for (let i = examineText.length; i >= 0; i--) {
-    examineTextNew = examineTextNew + examineText[i];
+//second task 2variant
+const isPalindrome1 = (string) => {
+  const stringModify = string.replaceAll(' ','').replaceAll('.','').replaceAll(',','').toLowerCase();
+  let stringNew = '';
+  for (let i = stringModify.length - 1; i >= 0; i--) {
+    stringNew += stringModify.at(i);
   }
-  const result = (examineText.toUpperCase === examineTextNew.toUpperCase) ? 'true' : 'false';
-  return result;
-}
-getPalindrome1('Evil fit some kill like me, kill like most, if live.');
+  return stringModify === stringNew;
+};
+isPalindrome1('Evil fit some kill like me, kill like most, if live.');
 
 //third task
-function getNumber (text) {
+const getNumber = (text) => {
+  if (typeof text === 'number') {
+    return text;
+  }
   let textNew = '';
   for (let i = 0; i < text.length; i++) {
-    if (typeof 'string' && text[i] <= '9' && text[i] >= '0') {
+    if (text[i] <= '9' && text[i] >= '0') {
       textNew = textNew + text[i];
     }
   }
-  const result = (textNew !== '') ? textNew : NaN;
-  return result;
-}
-getNumber('gff3557fh8');
+  return (textNew !== '') ? textNew : NaN;
+};
+getNumber('d4fhgjgj456577');
 
 //fourth task
 function addString (str, count, addRow) {
   const difference = count - str.length;
+  const notEnoughLength = count - str.length - addRow.length;
   if (difference > 0) {
     str = addRow.slice(0, difference) + str;
-  }
-  const notEnoughLength = count - str.length;
-  if (notEnoughLength > 0) {
     for (let i = 0; i < notEnoughLength; i++) {
       str = addRow[0] + str;
     }

@@ -6,7 +6,6 @@ const DESCRIPTION = [
   'О чем тебе говорит этот снимок?',
   'Изумительная четкость.'
 ];
-
 const NAMES = [
   'Андрей',
   'Алексей',
@@ -17,7 +16,6 @@ const NAMES = [
   'Инга',
   'Жанна',
 ];
-
 const MESSAGE = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -39,6 +37,7 @@ const randomNumberGenerator = (max,min) => {
 };
 
 //функция -возвращает случайный элемент массива(параметр elements - элементы массива)
+
 const getRandomArrayElement = (elements) => elements[randomNumberGenerator(0, elements.length - 1)];
 
 //проверка на уникальность
@@ -56,26 +55,24 @@ function createUniqueNumber (min,max) {
     return currentValue;
   };
 }
+//обращение к внутренней функции проверки на уникальность
+const uniqueCommentId = createUniqueNumber (1,1000);
 
-//не знаю,как это оптимизировать!!!! Не получилось функцию создать. Можно подсказку??
-const uniqueCommentId = createUniqueNumber (1, 1000);
-const uniquePhotoId = createUniqueNumber (1, 25);
-const urlPhoto = createUniqueNumber (1, 25);
-const uniqueMessage = createUniqueNumber (1, 6);
-const uniqueAvatar = createUniqueNumber (1, 6);
+const uniquePhotoId = createUniqueNumber (1,25);
+const uniquePhotoUrl = createUniqueNumber (1,25);
 
 // объект 2
 const createComments = () => ({
   id: uniqueCommentId(),
-  avatar: `img/avatar-${uniqueAvatar()}.svg`,
-  message: MESSAGE[uniqueMessage(1,6)],
+  avatar: `img/avatar-${randomNumberGenerator(1,6)}.svg`,
+  message: MESSAGE[randomNumberGenerator(1,6)],
   name: getRandomArrayElement(NAMES),
 });
 
 // объект 1
 const publishPhoto = () => ({
   id: uniquePhotoId(),
-  url: `photos/${urlPhoto()}.jpg`,
+  url: `photos/${uniquePhotoUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
   likes: randomNumberGenerator(15,200),
   comments: Array.from({length:randomNumberGenerator(1,6)}, createComments),
@@ -84,5 +81,7 @@ const publishPhoto = () => ({
 // массив из объектов 1
 const similarPublishPhoto = Array.from({length:25}, publishPhoto);
 
-console.log (similarPublishPhoto);
+// eslint-disable-next-line no-console
+console.log(similarPublishPhoto);
+
 

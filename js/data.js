@@ -69,9 +69,9 @@ const publishPhoto = () => ({
 });
 
 // массив из объектов 1
-const similarPublishPhoto = Array.from({length:25}, publishPhoto);
+const createPublishPhoto = (count) => Array.from({length:count}, publishPhoto);
 
 
-export {similarPublishPhoto};
+export {createPublishPhoto};
 
 

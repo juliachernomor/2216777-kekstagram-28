@@ -1,5 +1,6 @@
-import {similarPublishPhoto} from './data.js';
+import {createPublishPhoto} from './data.js';
+import './thumbnails.js';
 
 
 // eslint-disable-next-line no-console
-console.log(similarPublishPhoto);
+console.log(createPublishPhoto);

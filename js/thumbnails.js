@@ -15,4 +15,8 @@ similarPublishPhoto.forEach(({url, description, comments, likes}) => {
   listPicturesFragment.appendChild(pictureTemplateElement);
 });
 
-listPictures.appendChild(listPicturesFragment);
+const renderThumbnails = () => {
+  listPictures.appendChild(listPicturesFragment);
+};
+
+export {renderThumbnails};

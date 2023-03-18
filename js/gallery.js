@@ -8,6 +8,7 @@ const container = document.querySelector('.pictures');
 
 const renderGallery = () => {
   container.addEventListener('click', (evt) => {
+    debugger;
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
       return;

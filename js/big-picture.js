@@ -1,34 +1,30 @@
 
-import {clearRenderList} from './thumbnails.js';
 
 const bigPicture = document.querySelector('.big-picture');
+const userModalCloseElement = bigPicture.querySelector('.cancel');
+
 const body = document.querySelector('body');
-const userModalCloseElement = document.querySelector('.cancel');
 const commentsCounter = document.querySelector('.social__comment-count');
 const loadNewComments = document.querySelector('.comments-loader');
 
-const onDocumentEscKeydown = (evt) => {
-  if (evt.keyCode === 27) {
-    evt.preventDefault();
-    closeUserModal();
-  }
-};
 
-function closeUserModal () {
+userModalCloseElement.addEventListener('click', () => {
   bigPicture.classList.add('hidden');
-  clearRenderList();
-  document.removeEventListener('keydown', onDocumentEscKeydown);
-}
+});
+
 
 const showBigPicture = () => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   commentsCounter.classList.add('hidden');
   loadNewComments.classList.add('hidden');
-  document.addEventListener('keydown', onDocumentEscKeydown());
-  userModalCloseElement.addEventListener('click', () => {
-    closeUserModal();
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      bigPicture.classList.add('hidden');
+    }
   });
 };
+
 
 export {showBigPicture};

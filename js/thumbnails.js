@@ -8,23 +8,21 @@ const listPicturesFragment = document.createDocumentFragment();
 const similarPublishPhoto = createPublishPhoto(25);
 
 similarPublishPhoto.forEach(({url, description, comments, likes, id}) => {
-  const pictureTemplateElement = pictureTemplateItem.cloneNode(true);
-  pictureTemplateElement.querySelector('.picture__img').src = url;
-  pictureTemplateElement.querySelector('.picture__img').alt = description;
-  pictureTemplateElement.querySelector('.picture__comments').textContent = comments.length;
-  pictureTemplateElement.querySelector('.picture__likes').textContent = likes;
-  pictureTemplateElement.dataset.thumbnailId = id;
-  listPicturesFragment.appendChild(pictureTemplateElement);
+  const thumbnail = pictureTemplateItem.cloneNode(true);
+  thumbnail.querySelector('.picture__img').src = url;
+  thumbnail.querySelector('.picture__img').alt = description;
+  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  thumbnail.querySelector('.picture__likes').textContent = likes;
+  thumbnail.dataset.thumbnailId = id;
+  listPicturesFragment.appendChild(thumbnail);
 
-  return pictureTemplateElement;
+  return thumbnail;
+
 });
 
 const renderThumbnails = () => {
   listPictures.appendChild(listPicturesFragment);
 };
 
-const clearRenderList = () => {
-  listPictures.innerHTML = '';
-};
 
-export {renderThumbnails, clearRenderList};
+export {similarPublishPhoto, renderThumbnails};

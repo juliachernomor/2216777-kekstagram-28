@@ -10,6 +10,7 @@ const loadNewComments = document.querySelector('.comments-loader');
 
 userModalCloseElement.addEventListener('click', () => {
   bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
 });
 
 

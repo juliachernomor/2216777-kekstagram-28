@@ -1,3 +1,4 @@
-import {renderThumbnails} from './thumbnails.js';
+import {renderGallery} from './gallery.js';
+import {createPublishPhoto} from './data.js';
 
-renderThumbnails();
+renderGallery(createPublishPhoto());

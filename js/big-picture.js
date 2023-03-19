@@ -1,19 +1,19 @@
-// import { createComments } from './data.js';
+
 import {isEscapeKey} from './universal.js';
 const bigPicture = document.querySelector('.big-picture');
-// const commentList = bigPicture.querySelector('.social__comments');
+const commentList = bigPicture.querySelector('.social__comments');
+const commentListItem = bigPicture.querySelector('.social__comment');
 
-// const renderOnlyComments = (comments) => {
-//   commentList.innerHTML = '';
-//   const fragment = document.createDocumentFragment();
-//   comments.forEach((comment) => {
-//     const commentElement = createComments(comment);
-//     fragment.append(commentElement);
 
-//   });
-//   commentList.append(fragment);
-
-// };
+const renderComments = (comments) => {
+  commentList.innerHTML = '';
+  comments.forEach((comment) => {
+    const newComment = commentListItem.cloneNode(true);
+    newComment.querySelector('.social__picture').src = comment.avatar;
+    newComment.querySelector('.social__text').textContent = comment.message;
+    commentList.append(newComment);
+  });
+};
 
 
 const renderPictureComments = ({url, description, likes, comments}) => {
@@ -50,7 +50,7 @@ const showBigPicture = (data) => {
   loadNewComments.classList.add('hidden');
   document.addEventListener('keydown', onDocumentEscapeKeydown);
   renderPictureComments(data);
-  renderOnlyComments(data.comments);
+  renderComments(data.comments);
 };
 
 export {showBigPicture};

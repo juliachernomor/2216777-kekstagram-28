@@ -48,6 +48,7 @@ const createComments = (uniqueCommentAvatar, uniqueCommentMessage) => ({
   name: getRandomArrayElement(NAMES),
 });
 
+
 const createRandomNumber = () => {
   const uniqueCommentMessage = createUniqueNumber (0,7);
   const uniqueCommentAvatar = createUniqueNumber (1,AVATAR_COUNT);
@@ -68,10 +69,11 @@ const publishPhoto = () => ({
   comments: createRandomNumber(),
 });
 
+
 // массив из объектов 1
 const createPublishPhoto = (count) => Array.from({length:count}, publishPhoto);
 
 
-export {createPublishPhoto, createComments, createRandomNumber, publishPhoto};
+export {createPublishPhoto};
 
 

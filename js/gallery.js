@@ -2,7 +2,7 @@ import {showBigPicture} from './big-picture.js';
 import {renderThumbnails} from './thumbnails.js';
 import {similarPublishPhoto} from './thumbnails.js';
 
-const bigPicture = document.querySelector('.big-picture').querySelector('img');
+
 const container = document.querySelector('.pictures');
 
 
@@ -15,8 +15,6 @@ const renderGallery = () => {
     const picture = similarPublishPhoto.find(
       (item) => item.id === Number(thumbnail.dataset.thumbnailId)
     );
-    console.log(picture);
-    bigPicture.src = picture.url;
     showBigPicture(picture);
   });
   renderThumbnails();

@@ -72,6 +72,6 @@ const publishPhoto = () => ({
 const createPublishPhoto = (count) => Array.from({length:count}, publishPhoto);
 
 
-export {createPublishPhoto, publishPhoto};
+export {createPublishPhoto, createComments, createRandomNumber, publishPhoto};
 
 

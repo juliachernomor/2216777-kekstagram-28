@@ -1,8 +1,10 @@
 import {isEscapeKey} from './universal.js';
+import {loadComments} from './load-comments.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const commentList = bigPicture.querySelector('.social__comments');
 const commentListItem = bigPicture.querySelector('.social__comment');
-
+commentListItem.classList.add('hidden');
 
 const renderComments = (comments) => {
   commentList.innerHTML = '';
@@ -18,32 +20,10 @@ const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 
 
-const showComments = (comments) => {
-  const count = 5;
-  if(comments.length <= count) {
-    commentsCount.textContent = `${commentList.children.length} из ${commentList.children.length} комментариев`;
-    commentsLoader.classList.add('hidden');
-  }
-};
-//   } else if (comments.length > count) {
-//     commentListItem.classList.add('hidden');
-//     commentsLoader.classList.remove('hidden');
-//     commentsLoader.addEventListener('click', (evt) => {
-//       evt.preventDefault();
-//       for (let i = 0; i < num; i++) {
-//         commentListItem[i].classList.remove('hidden');
-//         commentsCount.textContent = `${commentList.children.length - commentList.querySelectorAll('.hidden').length} из ${commentList.children.length} комментариев`;
-//       }
-//     });
-//   }
-// };
-
-
 const renderPictureComments = ({url, description, likes}) => {
   bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
   bigPicture.querySelector('.social__caption').textContent = description;
   bigPicture.querySelector('.likes-count').textContent = likes;
-  // bigPicture.querySelector('.comments-count').textContent = comments.length;
 };
 
 const userModalCloseElement = bigPicture.querySelector('.cancel');
@@ -74,7 +54,7 @@ const showBigPicture = (data) => {
   document.addEventListener('keydown', onDocumentEscapeKeydown);
   renderPictureComments(data);
   renderComments(data.comments);
-  showComments(data.comments);
+  loadComments();
 };
 
 export {showBigPicture};

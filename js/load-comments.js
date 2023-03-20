@@ -1,3 +1,4 @@
+const COMMENT_SHOW_COUNT = 5;
 const bigPicture = document.querySelector('.big-picture');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentList = bigPicture.querySelector('.social__comments');
@@ -8,7 +9,6 @@ commentListItem.classList.add('hidden');
 
 const loadComments = () => {
   const hiddenComments = commentList.querySelectorAll('.hidden');
-  const COMMENT_SHOW_COUNT = 5;
   if (hiddenComments.length > COMMENT_SHOW_COUNT) {
     for (let i = 0; i < COMMENT_SHOW_COUNT; i++) {
       hiddenComments[i].classList.remove('hidden');

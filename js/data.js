@@ -2,7 +2,7 @@ import {randomNumberGenerator, getRandomArrayElement, createUniqueNumber} from '
 
 const ID_PHOTO_COUNT = 25;
 const URL_PHONO_COUNT = 25;
-// const AVATAR_COUNT = 6;
+const AVATAR_COUNT = 6;
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
 const COMMENT_COUNT = 300;
@@ -54,8 +54,8 @@ const createComments = (uniqueCommentAvatar, uniqueCommentMessage) => ({
 
 const createRandomNumber = () => {
   const uniqueCommentMessage = createUniqueNumber (0,10);
-  const uniqueCommentAvatar = createUniqueNumber (1,11);
-  const countNumber = randomNumberGenerator(1,11);
+  const uniqueCommentAvatar = createUniqueNumber (1,AVATAR_COUNT);
+  const countNumber = randomNumberGenerator(1,6);
   const comments = [];
   for (let i = 0; i < countNumber; i++) {
     comments[i] = createComments(uniqueCommentAvatar, uniqueCommentMessage);

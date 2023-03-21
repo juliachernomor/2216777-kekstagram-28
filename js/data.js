@@ -32,7 +32,10 @@ const MESSAGES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
   'Да что вы можете знать об этом? увиденное заставляет уйти мыслями в воспоминания',
-  'Наталкивает на размышления, да?'
+  'Наталкивает на размышления, да?',
+  'Классное достижение. Примите мои поздравления',
+  'Все бы было так просто',
+  'Больше ничего не придумали? Зачем на всеобщее обозрение размещать такое'
 ];
 
 // обращение к внутренней функции проверки на уникальность
@@ -50,7 +53,7 @@ const createComments = (uniqueCommentAvatar, uniqueCommentMessage) => ({
 
 
 const createRandomNumber = () => {
-  const uniqueCommentMessage = createUniqueNumber (0,7);
+  const uniqueCommentMessage = createUniqueNumber (0,10);
   const uniqueCommentAvatar = createUniqueNumber (1,AVATAR_COUNT);
   const countNumber = randomNumberGenerator(1,6);
   const comments = [];

@@ -12,6 +12,7 @@ const renderGallery = () => {
     if (!thumbnail) {
       return;
     }
+    evt.preventDefault();
     const picture = similarPublishPhoto.find(
       (item) => item.id === Number(thumbnail.dataset.thumbnailId)
     );

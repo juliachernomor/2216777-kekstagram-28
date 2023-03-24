@@ -1,7 +1,9 @@
 const TAG_ERROR_TEXT = 'Неправильно заполнено поле';
-const COMMENT_ERROR_TEXT = 'Длина комментария не может составлять больше 140 символов';
+const COMMENT_ERROR_TEXT_MAXLENGTH = 'Длина комментария не может составлять больше 140 символов';
+const COMMENT_ERROR_TEXT_MINLENGTH = 'Длина комментария не может составлять меньше 5 символов';
 const MAX_TEXT_HASHTAGS = 5;
 const MAX_TEXT_COMMENTS = 140;
+const MIN_TEXT_COMMENTS = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const uploadFileField = document.querySelector('#upload-file');
@@ -23,9 +25,10 @@ const pristine = new Pristine(form, {
 });
 
 ////валидация  поля хэштег
+const isEmpty = (tags) => tags.length > 0;
 const hasValidTag = (tag) => VALID_SYMBOLS.test(tag);
 
-const hasValidCount = (tags) => tags.length <= MAX_TEXT_HASHTAGS;
+const hasValidCount = (tags) => (tags.length <= MAX_TEXT_HASHTAGS);
 
 const hasUniqueTags = (tags) => {
   const lowerCaseTags = tags.map((tag)=>tag.toLowerCase());
@@ -37,7 +40,7 @@ const validateTags = (value) => {
     .trim()
     .split(' ')
     .filter((tag) => tag.trim().length);
-  return hasValidCount(tags) && hasUniqueTags(tags) && tags.every(hasValidTag);
+  return hasValidCount(tags) && hasUniqueTags(tags) && tags.every(hasValidTag) && isEmpty(tags);
 };
 
 pristine.addValidator(
@@ -46,12 +49,20 @@ pristine.addValidator(
   TAG_ERROR_TEXT
 );
 //валидация  поля textarea
-const validateComment = (value) => value.length <= MAX_TEXT_COMMENTS;
+const validateCommentMax = (value) => value.length <= MAX_TEXT_COMMENTS;
 
 pristine.addValidator(
   commentField,
-  validateComment,
-  COMMENT_ERROR_TEXT
+  validateCommentMax,
+  COMMENT_ERROR_TEXT_MAXLENGTH
+);
+
+const validateCommentMin = (value) => value.length > MIN_TEXT_COMMENTS;
+
+pristine.addValidator(
+  commentField,
+  validateCommentMin,
+  COMMENT_ERROR_TEXT_MINLENGTH
 );
 
 //открывает модальное окно + блокирует скролл + добавляет обр.событ
@@ -63,8 +74,8 @@ const openModalWindow = () => {
 
 //закрывает модальное окно+удал.обработчик события
 const closeModalWindow = () => {
-  // form.reset();
-  // pristine.reset();
+  form.reset();
+  pristine.reset();
   modalShow.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentEscapeKeydown);
@@ -85,6 +96,11 @@ closeModalWindowButton.addEventListener('click', closeModalWindow);
 uploadFileField.addEventListener('change', () => openModalWindow());
 
 //отправка данных на сервер
-form.addEventListener('submit',() => {
-  pristine.validate();
+form.addEventListener('submit',(evt) => {
+  const valid = pristine.validate();
+  if (valid) {
+    form.submit();
+  } else {
+    evt.preventDefault();
+  }
 });

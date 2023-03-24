@@ -1,6 +1,7 @@
 import {renderGallery} from './gallery.js';
-import './form.js';
+import {formSubmit} from './form.js';
 
 renderGallery();
+formSubmit();
 
 

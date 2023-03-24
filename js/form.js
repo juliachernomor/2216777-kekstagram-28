@@ -95,12 +95,14 @@ closeModalWindowButton.addEventListener('click', closeModalWindow);
 //при изменении файла сработает  обработчик
 uploadFileField.addEventListener('change', () => openModalWindow());
 
-//отправка данных на сервер
-form.addEventListener('submit',(evt) => {
-  const valid = pristine.validate();
-  if (valid) {
-    form.submit();
-  } else {
+const formSubmit = () => {
+  form.addEventListener('submit',(evt) => {
+    const valid = pristine.validate();
+    if (valid) {
+      form.submit();
+    }
     evt.preventDefault();
-  }
-});
+  });
+};
+
+export {formSubmit};

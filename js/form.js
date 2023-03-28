@@ -1,3 +1,6 @@
+import {resetScale} from './scale.js';
+import {resetEffects} from './effects.js';
+
 const TAG_ERROR_TEXT = 'Неправильно заполнено поле';
 const COMMENT_ERROR_TEXT_MAXLENGTH = 'Длина комментария не может составлять больше 140 символов';
 const COMMENT_ERROR_TEXT_MINLENGTH = 'Длина комментария не может составлять меньше 5 символов';
@@ -75,6 +78,8 @@ const openModalWindow = () => {
 //закрывает модальное окно+удал.обработчик события
 const closeModalWindow = () => {
   form.reset();
+  resetScale();
+  resetEffects();
   pristine.reset();
   modalShow.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -97,11 +102,10 @@ uploadFileField.addEventListener('change', () => openModalWindow());
 
 const formSubmit = () => {
   form.addEventListener('submit',(evt) => {
-    const valid = pristine.validate();
-    if (valid) {
+    evt.preventDefault();
+    if (pristine.validate()) {
       form.submit();
     }
-    evt.preventDefault();
   });
 };
 

@@ -1,5 +1,14 @@
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
+import { sendData } from './api.js';
+import { showAlert } from './universal.js';
+
+const SubmitButtonText = {
+  IDLE: 'Данные опубликованы',
+  SENDING: 'Сохраняю...',
+  POSTING: 'Сохранить'
+};
+const submitButton = document.querySelector('#upload-submit');
 
 const TAG_ERROR_TEXT = 'Неправильно заполнено поле';
 const COMMENT_ERROR_TEXT_MAXLENGTH = 'Длина комментария не может составлять больше 140 символов';
@@ -60,7 +69,7 @@ pristine.addValidator(
   COMMENT_ERROR_TEXT_MAXLENGTH
 );
 
-const validateCommentMin = (value) => value.length > MIN_TEXT_COMMENTS;
+const validateCommentMin = (value) => value.length >= MIN_TEXT_COMMENTS;
 
 pristine.addValidator(
   commentField,
@@ -73,6 +82,7 @@ const openModalWindow = () => {
   modalShow.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscapeKeydown);
+  submitButton.textContent = SubmitButtonText.POSTING;
 };
 
 //закрывает модальное окно+удал.обработчик события
@@ -100,11 +110,30 @@ closeModalWindowButton.addEventListener('click', closeModalWindow);
 //при изменении файла сработает  обработчик
 uploadFileField.addEventListener('change', () => openModalWindow());
 
-const formSubmit = () => {
+//
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+//отправка формы
+const formSubmit = (onSuccess) => {
   form.addEventListener('submit',(evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      form.submit();
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(unblockSubmitButton);
+      setTimeout (() => closeModalWindow(), 3000);
     }
   });
 };

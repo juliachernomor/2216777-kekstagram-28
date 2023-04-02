@@ -847,9 +847,35 @@ main {
   min-width: 125px;
 }
 
+.social__heart {
+  padding: 0;
+  background-color: #ffffff;
+  border: none;
+  margin-left: 10px;
+  padding-bottom: 5px;
+  background-image: url("../img/sprite.png");
+  background-repeat: no-repeat;
+  background-position: -5px -56px;
+  width: 20px;
+  height: 18px;
+  opacity: 0.5;
+}
+
+
+.social__heart:hover,
+.social__heart:focus{
+  opacity: 1;
+}
+
+.social__heart:active,
+.likes-count--active {
+  opacity: 1;
+  background-position: -5px -81px;
+}
+
 .likes-count {
-  position: relative;
-  padding-left: 30px;
+  padding:0;
+  margin-left: 5px;
 
   color: #f48181;
 
@@ -859,35 +885,6 @@ main {
 .likes-count:hover {
   color: #e90000;
 }
-
-.likes-count::before {
-  content: "";
-  position: absolute;
-
-  top: 3px;
-  left: 5px;
-
-  width: 20px;
-  height: 18px;
-
-  background-image: url("../img/sprite.png");
-  background-repeat: no-repeat;
-
-  background-position: -5px -56px;
-  opacity: 0.5;
-}
-
-.likes-count:hover::before,
-.likes-count:focus::before {
-  opacity: 1;
-}
-
-.likes-count:active::before,
-.likes-count--active::before {
-  opacity: 1;
-  background-position: -5px -81px;
-}
-
 
 /*
  * Комментарии к изображению

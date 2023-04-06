@@ -34,20 +34,18 @@ const success = document.querySelector('.success');
 const successInner = document.querySelector('.success__inner');
 const successButton = document.querySelector('.success__button');
 
-const hideMessages = () => success.remove();
+const closeMessagesModalWindow = () => success.classList.add('hidden');
 
 const onDocumentEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hideMessages();
+    closeMessagesModalWindow();
   }
 };
 
-document.addEventListener('click', onDocumentEscapeKeydown);
-
 document.addEventListener('click',(evt) => {
   if (evt.target === successButton || evt.target !== successInner) {
-    hideMessages();
+    closeMessagesModalWindow();
   }
 });
 
@@ -56,7 +54,10 @@ const showSuccessMessage = () => {
   const sectionSuccess = templateSuccess.querySelector('section');
   const cloneSectionSuccess = sectionSuccess.cloneNode(true);
   body.appendChild(cloneSectionSuccess);
+
+  document.addEventListener('keydown', onDocumentEscapeKeydown);
 };
+
 
 const showErrorMessage = () => {
   const templateError = document.querySelector('#error').content;
@@ -66,4 +67,4 @@ const showErrorMessage = () => {
 
 };
 
-export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage, hideMessages};
+export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage, closeMessagesModalWindow};

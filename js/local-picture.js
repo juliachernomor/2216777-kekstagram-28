@@ -1,4 +1,4 @@
-import {closeModalWindow} from './form.js';
+import {closeFormModalWindow} from './form.js';
 import {showAlert} from './universal.js';
 const FILE_TYPES = ['jpg','png'];
 const FILEFIELD_ERROR_TEXT = 'Загрузите файл в формате jpg или png';
@@ -16,7 +16,7 @@ const loadLocalFile = () => {
     if (matches) {
       preview.src = URL.createObjectURL(file);
     } else {
-      closeModalWindow();
+      closeFormModalWindow();
       showAlert(FILEFIELD_ERROR_TEXT);
     }
   });

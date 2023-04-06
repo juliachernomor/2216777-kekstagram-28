@@ -1,11 +1,10 @@
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import { sendData } from './api.js';
-import {showSuccessMessage, showErrorMessage, hideMessages} from './universal.js';
+import {showSuccessMessage, showErrorMessage, closeMessagesModalWindow} from './universal.js';
 
 
 const SubmitButtonText = {
-  IDLE: 'Данные опубликованы',
   SENDING: 'Сохраняю...',
   POSTING: 'Сохранить'
 };
@@ -87,7 +86,7 @@ const openModalWindow = () => {
 };
 
 //закрывает модальное окно+удал.обработчик события
-const closeModalWindow = () => {
+const closeFormModalWindow = () => {
   form.reset();
   resetScale();
   resetEffects();
@@ -101,47 +100,42 @@ const closeModalWindow = () => {
 function onDocumentEscapeKeydown (evt) {
   if (evt.key === 'Escape' && !(document.activeElement === hashtagsField || document.activeElement === commentField)) {
     evt.preventDefault();
-    closeModalWindow();
+    closeFormModalWindow();
   }
 }
 
 //обработчик события -  закрытие кнопке х
-closeModalWindowButton.addEventListener('click', closeModalWindow);
+closeModalWindowButton.addEventListener('click', closeFormModalWindow);
 
 //при изменении файла сработает  обработчик
 uploadFileField.addEventListener('change', () => openModalWindow());
 
 //
-// const blockSubmitButton = () => {
-//   submitButton.disabled = true;
-//   submitButton.textContent = SubmitButtonText.SENDING;
-// };
-
-// const unblockSubmitButton = () => {
-//   submitButton.disabled = true;
-//   submitButton.textContent = SubmitButtonText.IDLE;
-// };
-
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
 
 //отправка формы
 const formSubmit = () => {
   form.addEventListener('submit',(evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
+      blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(() => {
           showSuccessMessage();
         })
         .then(() => {
-          closeModalWindow();
+          closeFormModalWindow();
         })
         .catch (() => {
           showErrorMessage();
         })
-        .finally(hideMessages());
+        .finally(closeMessagesModalWindow());
     }
   });
 };
 
 
-export {formSubmit, closeModalWindow};
+export {formSubmit, closeFormModalWindow};

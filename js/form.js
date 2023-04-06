@@ -1,7 +1,7 @@
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import { sendData } from './api.js';
-import {showSuccessMessage, showErrorMessage} from './universal.js';
+import {showSuccessMessage, showErrorMessage, hideMessages} from './universal.js';
 
 
 const SubmitButtonText = {
@@ -112,15 +112,15 @@ closeModalWindowButton.addEventListener('click', closeModalWindow);
 uploadFileField.addEventListener('change', () => openModalWindow());
 
 //
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
+// const blockSubmitButton = () => {
+//   submitButton.disabled = true;
+//   submitButton.textContent = SubmitButtonText.SENDING;
+// };
 
-const unblockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.IDLE;
-};
+// const unblockSubmitButton = () => {
+//   submitButton.disabled = true;
+//   submitButton.textContent = SubmitButtonText.IDLE;
+// };
 
 
 //отправка формы
@@ -128,14 +128,17 @@ const formSubmit = () => {
   form.addEventListener('submit',(evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(() => {
           showSuccessMessage();
         })
-        .catch (() => showErrorMessage())
-        .finally(unblockSubmitButton);
-      setTimeout (() => closeModalWindow(), 3000);
+        .then(() => {
+          closeModalWindow();
+        })
+        .catch (() => {
+          showErrorMessage();
+        })
+        .finally(hideMessages());
     }
   });
 };

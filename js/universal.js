@@ -1,23 +1,6 @@
 const ALERT_SHOW_TIME = 7000;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-// debugger;
-// const success = document.querySelector('.success');
-// const successButton = document.querySelector('.success__button');
-
-// const hideModal = () => success.classList.add('.hidden');
-
-// successButton.addEventListener('click', () => hideModal());
-
-// const onDocumentEscapeKeydown = (evt) => {
-//   if (isEscapeKey(evt)) {
-//     evt.preventDefault();
-//     hideModal();
-//   }
-// };
-
-// document.addEventListener('keydown', onDocumentEscapeKeydown);
-
 
 const showAlert = (message) => {
   const alert = document.createElement('div');
@@ -47,6 +30,26 @@ const debounce = (callback, timeoutDelay = 500) => {
 };
 
 const body = document.querySelector('body');
+const success = document.querySelector('.success');
+const successInner = document.querySelector('.success__inner');
+const successButton = document.querySelector('.success__button');
+
+const hideMessages = () => success.remove();
+
+const onDocumentEscapeKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    hideMessages();
+  }
+};
+
+document.addEventListener('click', onDocumentEscapeKeydown);
+
+document.addEventListener('click',(evt) => {
+  if (evt.target === successButton || evt.target !== successInner) {
+    hideMessages();
+  }
+});
 
 const showSuccessMessage = () => {
   const templateSuccess = document.querySelector('#success').content;
@@ -55,12 +58,12 @@ const showSuccessMessage = () => {
   body.appendChild(cloneSectionSuccess);
 };
 
-
 const showErrorMessage = () => {
   const templateError = document.querySelector('#error').content;
   const sectionError = templateError.querySelector('section');
   const cloneSectionError = sectionError.cloneNode(true);
   body.appendChild(cloneSectionError);
+
 };
 
-export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage};
+export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage, hideMessages};

@@ -3,7 +3,7 @@ import {showAlert} from './universal.js';
 const FILE_TYPES = ['jpg','png'];
 const FILEFIELD_ERROR_TEXT = 'Загрузите файл в формате jpg или png';
 
-const fileChooser = document.querySelector('.fieldfile input[type=file]');
+const fileChooser = document.querySelector('input[type=file]');
 const preview = document.querySelector('.img-upload__preview img');
 
 const loadLocalFile = () => {

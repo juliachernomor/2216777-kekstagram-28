@@ -1,32 +1,22 @@
 const ALERT_SHOW_TIME = 7000;
-// генератор случайных целых положительных чисел в заданном диапазоне, возвращает случайное число
-const randomNumberGenerator = (max,min) => {
-  const lower = Math.ceil(Math.min(Math.abs(max),Math.abs(min)));
-  const upper = Math.floor(Math.max(Math.abs(max),Math.abs(min)));
-  const result = (Math.random() * (upper - lower + 1)) + lower;
-  return Math.floor(result);
-};
-
-// функция -возвращает случайный элемент массива(параметр elements - элементы массива)
-const getRandomArrayElement = (elements) => elements[randomNumberGenerator(0, elements.length - 1)];
-
-// проверка на уникальность
-const createUniqueNumber = (min,max) => {
-  const previousValues = [];
-  return() => {
-    let currentValue = randomNumberGenerator(min,max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = randomNumberGenerator(min,max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+// debugger;
+// const success = document.querySelector('.success');
+// const successButton = document.querySelector('.success__button');
+
+// const hideModal = () => success.classList.add('.hidden');
+
+// successButton.addEventListener('click', () => hideModal());
+
+// const onDocumentEscapeKeydown = (evt) => {
+//   if (isEscapeKey(evt)) {
+//     evt.preventDefault();
+//     hideModal();
+//   }
+// };
+
+// document.addEventListener('keydown', onDocumentEscapeKeydown);
 
 
 const showAlert = (message) => {
@@ -48,4 +38,29 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {randomNumberGenerator, getRandomArrayElement, createUniqueNumber, isEscapeKey, showAlert};
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const body = document.querySelector('body');
+
+const showSuccessMessage = () => {
+  const templateSuccess = document.querySelector('#success').content;
+  const sectionSuccess = templateSuccess.querySelector('section');
+  const cloneSectionSuccess = sectionSuccess.cloneNode(true);
+  body.appendChild(cloneSectionSuccess);
+};
+
+
+const showErrorMessage = () => {
+  const templateError = document.querySelector('#error').content;
+  const sectionError = templateError.querySelector('section');
+  const cloneSectionError = sectionError.cloneNode(true);
+  body.appendChild(cloneSectionError);
+};
+
+export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage};

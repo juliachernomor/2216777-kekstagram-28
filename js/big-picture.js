@@ -1,6 +1,7 @@
 import {isEscapeKey} from './universal.js';
 import {loadComments} from './load-comments.js';
 
+
 const bigPicture = document.querySelector('.big-picture');
 const commentList = bigPicture.querySelector('.social__comments');
 const commentListItem = bigPicture.querySelector('.social__comment');

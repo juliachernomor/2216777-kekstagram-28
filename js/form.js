@@ -1,7 +1,8 @@
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import { sendData } from './api.js';
-import { showAlert } from './universal.js';
+import {showSuccessMessage, showErrorMessage} from './universal.js';
+
 
 const SubmitButtonText = {
   IDLE: 'Данные опубликованы',
@@ -121,21 +122,23 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
+
 //отправка формы
-const formSubmit = (onSuccess) => {
+const formSubmit = () => {
   form.addEventListener('submit',(evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
+        .then(() => {
+          showSuccessMessage();
         })
+        .catch (() => showErrorMessage())
         .finally(unblockSubmitButton);
       setTimeout (() => closeModalWindow(), 3000);
     }
   });
 };
+
 
 export {formSubmit, closeModalWindow};

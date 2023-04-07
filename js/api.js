@@ -1,4 +1,4 @@
-import {showSuccessMessage, showErrorMessage, onDocumentClick} from './universal.js';
+import {showSuccessMessage, showErrorMessage} from './universal.js';
 import {unblockSubmitButton, closeFormModalWindow} from './form.js';
 
 const URL_GET_DATA = 'https://28.javascript.pages.academy/kekstagram/data';
@@ -36,13 +36,13 @@ const sendData = (body) => {
       }
       closeFormModalWindow();
       showSuccessMessage();
-      onDocumentClick();
       return response.json();
     })
     .catch(() => {
       showErrorMessage();
     })
     .finally(unblockSubmitButton);
+
 };
 
 export {getData, sendData};

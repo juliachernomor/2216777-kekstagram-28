@@ -8,6 +8,7 @@ import {init, getFilter} from './filter.js';
 loadLocalFile();
 formSubmit();
 
+
 getData()
   .then((data) => {
     const debouncedRenderGallery = debounce(renderGallery);

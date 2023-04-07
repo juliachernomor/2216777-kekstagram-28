@@ -1,3 +1,4 @@
+
 import {showSuccessMessage, showErrorMessage} from './universal.js';
 import {unblockSubmitButton, closeFormModalWindow} from './form.js';
 
@@ -42,7 +43,6 @@ const sendData = (body) => {
       showErrorMessage();
     })
     .finally(unblockSubmitButton);
-
 };
 
 export {getData, sendData};

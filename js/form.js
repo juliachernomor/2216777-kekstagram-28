@@ -4,16 +4,14 @@ import { sendData } from './api.js';
 
 const SubmitButtonText = {
   SENDING: 'Сохраняю...',
-  POSTING: 'Сохранить'
+  POSTING: 'Сохранить',
+  IDLE: 'Повторить отправку',
 };
 const submitButton = document.querySelector('#upload-submit');
-
 const TAG_ERROR_TEXT = 'Неправильно заполнено поле';
 const COMMENT_ERROR_TEXT_MAXLENGTH = 'Длина комментария не может составлять больше 140 символов';
-
 const MAX_TEXT_HASHTAGS = 5;
 const MAX_TEXT_COMMENTS = 140;
-
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const uploadFileField = document.querySelector('#upload-file');
@@ -106,9 +104,8 @@ const blockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.SENDING;
 };
 
-
 const unblockSubmitButton = () => {
-  submitButton.disabled = true;
+  submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
@@ -124,4 +121,4 @@ const formSubmit = () => {
 };
 
 
-export {formSubmit, closeFormModalWindow, unblockSubmitButton};
+export {formSubmit, closeFormModalWindow, unblockSubmitButton, onDocumentEscapeKeydown};

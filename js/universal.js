@@ -1,3 +1,4 @@
+import {onDocumentEscapeKeydown} from './form.js';
 const ALERT_SHOW_TIME = 7000;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
@@ -41,6 +42,7 @@ const showSuccessMessage = () => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       success.remove();
+      evt.stopPropagation();
     }
   });
   successButton.addEventListener('click',() => success.remove());
@@ -62,6 +64,7 @@ const showErrorMessage = () => {
   const errorInner = document.querySelector('.error__inner');
   const error = document.querySelector('.error');
   const errorButton = document.querySelector('.error__button');
+  document.removeEventListener('keydown', onDocumentEscapeKeydown);
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -75,7 +78,6 @@ const showErrorMessage = () => {
       error.remove();
     }
   });
-
 };
 
 export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage};

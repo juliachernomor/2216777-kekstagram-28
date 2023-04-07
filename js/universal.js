@@ -34,30 +34,23 @@ const success = document.querySelector('.success');
 const successInner = document.querySelector('.success__inner');
 const successButton = document.querySelector('.success__button');
 
-const closeMessagesModalWindow = () => success.classList.add('hidden');
+const closeMessagesModalWindow = () => {
+  success.remove();
+};
 
-const onDocumentEscapeKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+function onDocumentClick (evt) {
+  if (evt.key === 'Escape' || evt.target === successButton || evt.target !== successInner) {
     evt.preventDefault();
     closeMessagesModalWindow();
   }
-};
-
-document.addEventListener('click',(evt) => {
-  if (evt.target === successButton || evt.target !== successInner) {
-    closeMessagesModalWindow();
-  }
-});
+}
 
 const showSuccessMessage = () => {
   const templateSuccess = document.querySelector('#success').content;
   const sectionSuccess = templateSuccess.querySelector('section');
   const cloneSectionSuccess = sectionSuccess.cloneNode(true);
   body.appendChild(cloneSectionSuccess);
-
-  document.addEventListener('keydown', onDocumentEscapeKeydown);
 };
-
 
 const showErrorMessage = () => {
   const templateError = document.querySelector('#error').content;
@@ -67,4 +60,4 @@ const showErrorMessage = () => {
 
 };
 
-export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage, closeMessagesModalWindow};
+export { isEscapeKey, showAlert, debounce, showSuccessMessage, showErrorMessage, onDocumentClick};

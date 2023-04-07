@@ -1,8 +1,6 @@
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import { sendData } from './api.js';
-import {showSuccessMessage, showErrorMessage, closeMessagesModalWindow} from './universal.js';
-
 
 const SubmitButtonText = {
   SENDING: 'Сохраняю...',
@@ -116,26 +114,22 @@ const blockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.SENDING;
 };
 
-//отправка формы
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+// отправка формы
 const formSubmit = () => {
   form.addEventListener('submit',(evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(() => {
-          showSuccessMessage();
-        })
-        .then(() => {
-          closeFormModalWindow();
-        })
-        .catch (() => {
-          showErrorMessage();
-        })
-        .finally(closeMessagesModalWindow());
+      sendData(new FormData(evt.target));
     }
   });
 };
 
 
-export {formSubmit, closeFormModalWindow};
+export {formSubmit, closeFormModalWindow, unblockSubmitButton};

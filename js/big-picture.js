@@ -1,4 +1,4 @@
-import {isEscapeKey} from './universal.js';
+
 import {loadComments} from './load-comments.js';
 
 
@@ -29,7 +29,7 @@ const renderPictureComments = ({url, description, likes}) => {
 
 const userModalCloseElement = bigPicture.querySelector('.cancel');
 
-
+const isEscapeKey = (evt) => evt.key === 'Escape';
 const onDocumentEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();

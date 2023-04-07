@@ -1,6 +1,7 @@
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import { sendData } from './api.js';
+import {showSuccessMessage, showErrorMessage} from './universal.js';
 
 const SubmitButtonText = {
   SENDING: 'Сохраняю...',
@@ -96,7 +97,7 @@ function onDocumentEscapeKeydown (evt) {
 closeModalWindowButton.addEventListener('click', closeFormModalWindow);
 
 //при изменении файла сработает  обработчик
-uploadFileField.addEventListener('change', () => openModalWindow());
+uploadFileField.addEventListener('change', openModalWindow);
 
 //
 const blockSubmitButton = () => {
@@ -109,16 +110,24 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-// отправка формы
+
 const formSubmit = () => {
   form.addEventListener('submit',(evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
-      sendData(new FormData(evt.target));
+      sendData(new FormData(evt.target))
+        .then(() => {
+          closeFormModalWindow();
+          showSuccessMessage();
+        })
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };
 
 
-export {formSubmit, closeFormModalWindow, unblockSubmitButton, onDocumentEscapeKeydown};
+export {closeFormModalWindow, unblockSubmitButton, onDocumentEscapeKeydown, formSubmit};

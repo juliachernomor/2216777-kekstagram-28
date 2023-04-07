@@ -1,20 +1,22 @@
+const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 
-import {showSuccessMessage, showErrorMessage} from './universal.js';
-import {unblockSubmitButton, closeFormModalWindow} from './form.js';
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
 
-const URL_GET_DATA = 'https://28.javascript.pages.academy/kekstagram/data';
-const URL_SEND_DATA = 'https://28.javascript.pages.academy/kekstagram';
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
 
 const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-const getData = () =>
-  fetch(URL_GET_DATA, {
-    method: 'GET',
-    body: null
-  })
+const load = (route, errorText, method = Method.GET, body = null) =>
+  fetch(`${BASE_URL}${route}`, {method, body})
     .then((response) => {
       if (!response.ok) {
         throw new Error();
@@ -22,27 +24,11 @@ const getData = () =>
       return response.json();
     })
     .catch(() => {
-      throw new Error(ErrorText.GET_DATA);
+      throw new Error(errorText);
     });
 
+const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
 
-const sendData = (body) => {
-  fetch(URL_SEND_DATA, {
-    method: 'POST',
-    body,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error();
-      }
-      closeFormModalWindow();
-      showSuccessMessage();
-      return response.json();
-    })
-    .catch(() => {
-      showErrorMessage();
-    })
-    .finally(unblockSubmitButton);
-};
+const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 
 export {getData, sendData};

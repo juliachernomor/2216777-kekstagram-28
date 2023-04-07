@@ -19,6 +19,7 @@ const loadLocalFile = () => {
       closeFormModalWindow();
       showAlert(FILEFIELD_ERROR_TEXT);
     }
+    fileChooser.reset();
   });
 };
 

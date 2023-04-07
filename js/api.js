@@ -35,8 +35,8 @@ const sendData = (body) => {
         throw new Error();
       }
       closeFormModalWindow();
-      onDocumentClick();
       showSuccessMessage();
+      onDocumentClick();
       return response.json();
     })
     .catch(() => {

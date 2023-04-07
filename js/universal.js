@@ -1,7 +1,7 @@
 import {onDocumentEscapeKeydown} from './form.js';
 const ALERT_SHOW_TIME = 7000;
 
-
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const showAlert = (message) => {
   const alert = document.createElement('div');

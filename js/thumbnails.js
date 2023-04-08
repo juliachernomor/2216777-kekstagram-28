@@ -1,4 +1,3 @@
-
 const listPictures = document.querySelector('.pictures');
 const pictureTemplateItem = document.querySelector('#picture').content.querySelector('.picture');
 const fragment = document.createDocumentFragment();

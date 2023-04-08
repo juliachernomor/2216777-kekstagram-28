@@ -1,5 +1,6 @@
 import {closeFormModalWindow} from './form.js';
-import {showAlert} from './universal.js';
+import {showAlert} from './messages.js';
+
 const FILE_TYPES = ['jpg','png'];
 const FILEFIELD_ERROR_TEXT = 'Загрузите файл в формате jpg или png';
 
@@ -19,7 +20,6 @@ const loadLocalFile = () => {
       closeFormModalWindow();
       showAlert(FILEFIELD_ERROR_TEXT);
     }
-    fileChooser.reset();
   });
 };
 

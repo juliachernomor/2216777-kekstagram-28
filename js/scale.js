@@ -8,12 +8,11 @@ const scaleButtonSmaller = document.querySelector('.scale__control--smaller');
 const scaleButtonBigger = document.querySelector('.scale__control--bigger');
 const imgPreviewElement = document.querySelector('.img-upload__preview img');
 
-//задаем значение value стилям картинки и  форме
 const scaleImage = (value) => {
   imgPreviewElement.style.transform = `scale(${value / 100})`;
   valueScaleElement.value = `${value}%`;
 };
-//получение новых значений при уменьшении и увеличении
+
 const getSmallerButtonClick = () => {
   const currentValue = parseInt(valueScaleElement.value, 10);
   let newValue = currentValue - SCALE_STEP;
@@ -32,12 +31,9 @@ const getBiggerButtonClick = () => {
   scaleImage(newValue);
 };
 
-//масштаб по умолчанию
 const resetScale = () => scaleImage(DEFOULT_SCALE);
 
-//обработчики событий
 scaleButtonSmaller.addEventListener('click', getSmallerButtonClick);
 scaleButtonBigger.addEventListener('click', getBiggerButtonClick);
 
 export {resetScale};
-

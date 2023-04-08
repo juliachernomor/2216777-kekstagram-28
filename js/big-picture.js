@@ -1,10 +1,13 @@
-
 import {loadComments} from './load-comments.js';
-
 
 const bigPicture = document.querySelector('.big-picture');
 const commentList = bigPicture.querySelector('.social__comments');
 const commentListItem = bigPicture.querySelector('.social__comment');
+const commentsCount = bigPicture.querySelector('.social__comment-count');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
+const userModalCloseElement = bigPicture.querySelector('.cancel');
+const body = document.querySelector('body');
+
 commentListItem.classList.add('hidden');
 
 const renderComments = (comments) => {
@@ -17,17 +20,18 @@ const renderComments = (comments) => {
   });
 };
 
-const commentsCount = bigPicture.querySelector('.social__comment-count');
-const commentsLoader = bigPicture.querySelector('.comments-loader');
-
-
 const renderPictureComments = ({url, description, likes}) => {
   bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
   bigPicture.querySelector('.social__caption').textContent = description;
   bigPicture.querySelector('.likes-count').textContent = likes;
 };
 
-const userModalCloseElement = bigPicture.querySelector('.cancel');
+const closeUserModal = () => {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+};
+
+userModalCloseElement.addEventListener('click', () => closeUserModal ());
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 const onDocumentEscapeKeydown = (evt) => {
@@ -36,16 +40,6 @@ const onDocumentEscapeKeydown = (evt) => {
     closeUserModal();
   }
 };
-
-const body = document.querySelector('body');
-
-function closeUserModal () {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-}
-
-userModalCloseElement.addEventListener('click', () => closeUserModal ());
-
 
 const showBigPicture = (data) => {
   bigPicture.classList.remove('hidden');
@@ -58,4 +52,4 @@ const showBigPicture = (data) => {
   loadComments();
 };
 
-export {showBigPicture};
+export {showBigPicture, isEscapeKey};

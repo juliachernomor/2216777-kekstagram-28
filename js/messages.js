@@ -1,7 +1,7 @@
+import {isEscapeKey} from './big-picture.js';
 import {onDocumentEscapeKeydown} from './form.js';
-const ALERT_SHOW_TIME = 7000;
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const ALERT_SHOW_TIME = 7000;
 
 const showAlert = (message) => {
   const alert = document.createElement('div');
@@ -22,26 +22,22 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const debounce = (callback, timeoutDelay = 500) => {
-  let timeoutId;
-  return (...rest) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
+const createElementMessage = (selector) => {
+  const template = document.querySelector(selector).content;
+  const sectionElement = template.querySelector('section');
+  const cloneElement = sectionElement.cloneNode(true);
+  document.body.appendChild(cloneElement);
 };
 
 const showSuccessMessage = () => {
-  const templateSuccess = document.querySelector('#success').content;
-  const sectionSuccess = templateSuccess.querySelector('section');
-  const cloneSectionSuccess = sectionSuccess.cloneNode(true);
-  document.body.appendChild(cloneSectionSuccess);
+  createElementMessage('#success');
   const successInner = document.querySelector('.success__inner');
   const success = document.querySelector('.success');
   const successButton = document.querySelector('.success__button');
+
   document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
+    if(isEscapeKey(evt)) {
       success.remove();
-      evt.stopPropagation();
     }
   });
   successButton.addEventListener('click',() => success.remove());
@@ -52,28 +48,24 @@ const showSuccessMessage = () => {
   });
 };
 
-
 const showErrorMessage = () => {
-  const templateError = document.querySelector('#error').content;
-  const sectionError = templateError.querySelector('section');
-  const cloneSectionError = sectionError.cloneNode(true);
-  document.body.appendChild(cloneSectionError);
-
+  createElementMessage('#error');
   const errorInner = document.querySelector('.error__inner');
   const error = document.querySelector('.error');
   const errorButton = document.querySelector('.error__button');
+
   document.removeEventListener('keydown', onDocumentEscapeKeydown);
   document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
+    if(isEscapeKey(evt)) {
       error.remove();
     }
   });
   errorButton.addEventListener('click',() => error.remove());
-  document.addEventListener('click', (evt) => {
+  document.addEventListener('click',(evt) => {
     if(evt.target !== errorInner) {
       error.remove();
     }
   });
 };
 
-export {showAlert, debounce, showSuccessMessage, showErrorMessage};
+export {showAlert, showSuccessMessage, showErrorMessage};

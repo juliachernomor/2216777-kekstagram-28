@@ -1,39 +1,34 @@
 import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import { sendData } from './api.js';
-import {showSuccessMessage, showErrorMessage} from './universal.js';
+import {showSuccessMessage, showErrorMessage} from './messages.js';
 
-const SubmitButtonText = {
-  SENDING: 'Сохраняю...',
-  POSTING: 'Сохранить',
-  IDLE: 'Повторить отправку',
-};
-const submitButton = document.querySelector('#upload-submit');
 const TAG_ERROR_TEXT = 'Неправильно заполнено поле';
 const COMMENT_ERROR_TEXT_MAXLENGTH = 'Длина комментария не может составлять больше 140 символов';
 const MAX_TEXT_HASHTAGS = 5;
 const MAX_TEXT_COMMENTS = 140;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const SubmitButtonText = {
+  SENDING: 'Сохраняю...',
+  POSTING: 'Сохранить',
+  IDLE: 'Повторить отправку',
+};
 
-const uploadFileField = document.querySelector('#upload-file');
 const body = document.querySelector('body');
+const submitButton = document.querySelector('#upload-submit');
+const uploadFileField = document.querySelector('#upload-file');
 const modalShow = document.querySelector('.img-upload__overlay');
-
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
-
 const closeModalWindowButton = document.querySelector('.img-upload__cancel');
-
 const form = document.querySelector('.img-upload__form');
 
-//объявление pristine
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent:'img-upload__field-wrapper',
   errorTextClass:'img-upload__field-wrapper--error',
 });
 
-////валидация  поля хэштег
 const hasValidTag = (tag) => VALID_SYMBOLS.test(tag);
 
 const hasValidCount = (tags) => (tags.length <= MAX_TEXT_HASHTAGS);
@@ -56,7 +51,7 @@ pristine.addValidator(
   validateTags,
   TAG_ERROR_TEXT
 );
-//валидация  поля textarea
+
 const validateCommentMax = (value) => value.length <= MAX_TEXT_COMMENTS;
 
 pristine.addValidator(
@@ -65,8 +60,6 @@ pristine.addValidator(
   COMMENT_ERROR_TEXT_MAXLENGTH
 );
 
-
-//открывает модальное окно + блокирует скролл + добавляет обр.событ
 const openModalWindow = () => {
   modalShow.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -74,7 +67,6 @@ const openModalWindow = () => {
   submitButton.textContent = SubmitButtonText.POSTING;
 };
 
-//закрывает модальное окно+удал.обработчик события
 const closeFormModalWindow = () => {
   form.reset();
   resetScale();
@@ -85,7 +77,6 @@ const closeFormModalWindow = () => {
   document.removeEventListener('keydown', onDocumentEscapeKeydown);
 };
 
-//закрывает  при нажатии Escape условии, что поля хэш и текстареа не активны
 function onDocumentEscapeKeydown (evt) {
   if (evt.key === 'Escape' && !(document.activeElement === hashtagsField || document.activeElement === commentField)) {
     evt.preventDefault();
@@ -93,13 +84,9 @@ function onDocumentEscapeKeydown (evt) {
   }
 }
 
-//обработчик события -  закрытие кнопке х
 closeModalWindowButton.addEventListener('click', closeFormModalWindow);
-
-//при изменении файла сработает  обработчик
 uploadFileField.addEventListener('change', openModalWindow);
 
-//
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
@@ -109,7 +96,6 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
 };
-
 
 const formSubmit = () => {
   form.addEventListener('submit',(evt) => {
@@ -128,6 +114,5 @@ const formSubmit = () => {
     }
   });
 };
-
 
 export {closeFormModalWindow, unblockSubmitButton, onDocumentEscapeKeydown, formSubmit};

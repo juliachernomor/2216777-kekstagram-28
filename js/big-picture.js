@@ -1,4 +1,5 @@
 import {loadComments} from './load-comments.js';
+import {isEscapeKey} from './universal.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const commentList = bigPicture.querySelector('.social__comments');
@@ -26,14 +27,6 @@ const renderPictureComments = ({url, description, likes}) => {
   bigPicture.querySelector('.likes-count').textContent = likes;
 };
 
-const closeUserModal = () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-};
-
-userModalCloseElement.addEventListener('click', () => closeUserModal ());
-
-const isEscapeKey = (evt) => evt.key === 'Escape';
 const onDocumentEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -41,15 +34,23 @@ const onDocumentEscapeKeydown = (evt) => {
   }
 };
 
+function closeUserModal () {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentEscapeKeydown);
+}
+
+userModalCloseElement.addEventListener('click', () => closeUserModal ());
+
 const showBigPicture = (data) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   commentsCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentEscapeKeydown);
-  renderPictureComments(data);
   renderComments(data.comments);
+  renderPictureComments(data);
   loadComments();
 };
 
-export {showBigPicture, isEscapeKey};
+export {showBigPicture};

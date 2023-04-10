@@ -2,6 +2,7 @@ import {resetScale} from './scale.js';
 import {resetEffects} from './effects.js';
 import { sendData } from './api.js';
 import {showSuccessMessage, showErrorMessage} from './messages.js';
+import {isEscapeKey} from './universal.js';
 
 const TAG_ERROR_TEXT = 'Неправильно заполнено поле';
 const COMMENT_ERROR_TEXT_MAXLENGTH = 'Длина комментария не может составлять больше 140 символов';
@@ -78,7 +79,7 @@ const closeFormModalWindow = () => {
 };
 
 function onDocumentEscapeKeydown (evt) {
-  if (evt.key === 'Escape' && !(document.activeElement === hashtagsField || document.activeElement === commentField)) {
+  if (isEscapeKey && !(document.activeElement === hashtagsField || document.activeElement === commentField)) {
     evt.preventDefault();
     closeFormModalWindow();
   }

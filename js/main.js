@@ -6,6 +6,7 @@ import {loadLocalFile} from './local-picture.js';
 import {init, getFilter} from './filter.js';
 import {formSubmit} from './form.js';
 
+
 loadLocalFile();
 formSubmit();
 

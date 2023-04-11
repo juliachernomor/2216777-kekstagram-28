@@ -2,13 +2,9 @@ import {renderGallery} from './gallery.js';
 import {getData} from './api.js';
 import {showAlert} from './messages.js';
 import {debounce} from './debounce.js';
-import {loadLocalFile} from './local-picture.js';
+import './local-picture.js';
 import {init, getFilter} from './filter.js';
-import {formSubmit} from './form.js';
-
-
-loadLocalFile();
-formSubmit();
+import './form.js';
 
 getData()
   .then((data) => {

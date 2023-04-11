@@ -79,7 +79,8 @@ const closeFormModalWindow = () => {
 };
 
 function onDocumentEscapeKeydown (evt) {
-  if (isEscapeKey && !(document.activeElement === hashtagsField || document.activeElement === commentField)) {
+  const isFocusOnField = document.activeElement === hashtagsField || document.activeElement === commentField;
+  if (isEscapeKey(evt) && !isFocusOnField) {
     evt.preventDefault();
     closeFormModalWindow();
   }

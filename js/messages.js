@@ -30,7 +30,6 @@ const createElementMessage = (selector) => {
   body.append(cloneElement);
 };
 
-
 const onEscapeClick = (evt) => {
   if(isEscapeKey(evt)) {
     containerClose ();
@@ -55,11 +54,11 @@ function containerClose () {
   button.addEventListener('click', onButtonClick);
 }
 
-const getMessages = (templateId,sectionOfMessage,divOfMessage,buttonOfMessage) => {
-  createElementMessage(templateId);
-  container = document.querySelector(sectionOfMessage);
-  containerInner = document.querySelector(divOfMessage);
-  button = document.querySelector(buttonOfMessage);
+const getMessages = (templateMessage,sectionMessage,divMessage,buttonMessage) => {
+  createElementMessage(templateMessage);
+  container = document.querySelector(sectionMessage);
+  containerInner = document.querySelector(divMessage);
+  button = document.querySelector(buttonMessage);
   document.addEventListener('click', onOutOfContainerClick);
   document.addEventListener('keydown', onEscapeClick);
   button.addEventListener('click', onButtonClick);

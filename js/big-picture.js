@@ -12,7 +12,6 @@ const pictureDescription = bigPicture.querySelector('.social__caption');
 const pictureLikes = bigPicture.querySelector('.likes-count');
 const body = document.body;
 
-
 commentListItem.classList.add('hidden');
 
 const renderComments = (comments) => {

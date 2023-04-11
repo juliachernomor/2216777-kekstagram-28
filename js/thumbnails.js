@@ -1,8 +1,6 @@
-
 const listPictures = document.querySelector('.pictures');
 const pictureTemplateItem = document.querySelector('#picture').content.querySelector('.picture');
 const fragment = document.createDocumentFragment();
-
 
 const createThumbnail = ({url, description, comments, likes, id}) => {
   const thumbnail = pictureTemplateItem.cloneNode(true);

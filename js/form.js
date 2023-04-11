@@ -15,7 +15,7 @@ const SubmitButtonText = {
   IDLE: 'Повторить отправку',
 };
 
-const body = document.querySelector('body');
+const body = document.body;
 const submitButton = document.querySelector('#upload-submit');
 const uploadFileField = document.querySelector('#upload-file');
 const modalShow = document.querySelector('.img-upload__overlay');
@@ -98,22 +98,20 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const formSubmit = () => {
-  form.addEventListener('submit',(evt) => {
-    evt.preventDefault();
-    if (pristine.validate()) {
-      blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(() => {
-          closeFormModalWindow();
-          showSuccessMessage();
-        })
-        .catch(() => {
-          showErrorMessage();
-        })
-        .finally(unblockSubmitButton);
-    }
-  });
-};
+form.addEventListener('submit',(evt) => {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    blockSubmitButton();
+    sendData(new FormData(evt.target))
+      .then(() => {
+        closeFormModalWindow();
+        showSuccessMessage();
+      })
+      .catch(() => {
+        showErrorMessage();
+      })
+      .finally(unblockSubmitButton);
+  }
+});
 
-export {closeFormModalWindow, unblockSubmitButton, onDocumentEscapeKeydown, formSubmit};
+export {closeFormModalWindow, unblockSubmitButton, onDocumentEscapeKeydown,};

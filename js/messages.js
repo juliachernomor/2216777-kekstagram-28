@@ -2,6 +2,7 @@ import {isEscapeKey} from './universal.js';
 import {onDocumentEscapeKeydown} from './form.js';
 
 const ALERT_SHOW_TIME = 7000;
+const body = document.body;
 
 const showAlert = (message) => {
   const alert = document.createElement('div');
@@ -15,19 +16,18 @@ const showAlert = (message) => {
   alert.style.textAlign = 'center';
   alert.style.backgroundColor = 'red';
   alert.textContent = message;
-  document.body.append(alert);
+  body.append(alert);
 
   setTimeout(() => {
     alert.remove();
   }, ALERT_SHOW_TIME);
 };
 
-
 const createElementMessage = (selector) => {
   const template = document.querySelector(selector).content;
   const sectionElement = template.querySelector('section');
   const cloneElement = sectionElement.cloneNode(true);
-  document.body.append(cloneElement);
+  body.append(cloneElement);
 };
 
 
@@ -55,19 +55,19 @@ function containerClose () {
   button.addEventListener('click', onButtonClick);
 }
 
-const getMessages = (element1,element2,element3,element4) => {
-  createElementMessage(element1);
-  container = document.querySelector(element3);
-  containerInner = document.querySelector(element2);
-  button = document.querySelector(element4);
+const getMessages = (templateId,sectionOfMessage,divOfMessage,buttonOfMessage) => {
+  createElementMessage(templateId);
+  container = document.querySelector(sectionOfMessage);
+  containerInner = document.querySelector(divOfMessage);
+  button = document.querySelector(buttonOfMessage);
   document.addEventListener('click', onOutOfContainerClick);
   document.addEventListener('keydown', onEscapeClick);
   button.addEventListener('click', onButtonClick);
 };
 
-const showSuccessMessage = () => getMessages('#success','.success__inner','.success','.success__button');
+const showSuccessMessage = () => getMessages('#success','.success','.success__inner','.success__button');
 const showErrorMessage = () => {
-  getMessages('#error','.error__inner','.error','.error__button');
+  getMessages('#error','.error','.error__inner','.error__button');
   document.removeEventListener('keydown', onDocumentEscapeKeydown);
 };
 

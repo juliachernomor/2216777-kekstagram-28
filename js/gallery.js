@@ -1,7 +1,6 @@
 import {showBigPicture} from './big-picture.js';
 import {renderThumbnails,cleanThumbnails} from './thumbnails.js';
 
-
 const container = document.querySelector('.pictures');
 let pictures = [];
 
